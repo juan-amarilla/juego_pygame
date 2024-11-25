@@ -1,4 +1,4 @@
-from constantes import (pygame, SONIDO_TECLADO_MENU, COLORES, PANTALLA)
+from constantes import *
 from funciones_menu import (colocar_fondo, colocar_texto)
 
 def leer_archivo(ruta: str, ejecutar: bool, fuente, vertical: int, posicion: int) -> None:

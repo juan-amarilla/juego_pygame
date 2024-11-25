@@ -1,0 +1,16 @@
+{
+    "objetos": [
+        {
+            "tipo": "tesoro",
+            "cantidad": 5
+        },
+        {
+            "tipo": "vida",
+            "cantidad": 3
+        },
+        {
+            "tipo": "bomba",
+            "cantidad": 1
+        }
+    ]
+}

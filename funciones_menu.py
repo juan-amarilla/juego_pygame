@@ -1,4 +1,4 @@
-from constantes import (pygame, COLORES, PANTALLA, OPCIONES, VERTICAL, POSICION, IMAGENES)
+from constantes import *
 
 def iniciar_con_musica(ruta: str) -> None:
     """
