@@ -1,6 +1,22 @@
-COLOR_FONDO = (0, 0, 0)
-COLOR_TEXTO = (255, 255, 255)
-COLOR_SELECCIONADO = (255, 0, 0)
-COLOR_PERSONAJE = (0, 255, 0)
+# pylint: disable=no-member
+import pygame
+# Inicialización de Pygame
+pygame.init()
 
-OPCIONES = ("Jugar", "Salir")
+ANCHO = 800
+ALTO = 600
+NOMBRE_JUEGO = "Aventura en el Lugar de Escape"
+BOMBAS_MAX = 2
+
+# Cargar sonidos
+SONIDO_TESORO = pygame.mixer.Sound("recursos/sonidos/sonido_tesoro.mp3")
+SONIDO_VIDA = pygame.mixer.Sound("recursos/sonidos/sonido_vida.mp3")
+SONIDO_BOMBA = pygame.mixer.Sound("recursos/sonidos/sonido_explosion.mp3")
+
+# Cargar la imagen del fondo
+FONDO = pygame.image.load("recursos/imagenes/Bosque.png")
+FONDO = pygame.transform.scale(FONDO, (ANCHO, ALTO))
+FONDO_ANCHO = FONDO.get_width()
+FONDO_1 = 0
+FONDO_2 = FONDO_ANCHO
+VELOCIDAD_FONDO = 2

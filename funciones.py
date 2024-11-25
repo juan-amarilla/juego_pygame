@@ -1,78 +1,51 @@
-import pygame
-from constantes import *
+import random
+from lectura_json import leer_objetos
+from clases import Objeto
 
-def iniciar() -> None:
+
+def generar_bombas(objetos, bombas_max):
     """
-    Descripcion
+    Genera nuevas bombas si el número de bombas activas es menor al máximo permitido.
 
-    Args:
-    None
-
-    Returns:
-    None
+    :param objetos: Lista de objetos en el juego.
+    :param max_bombas: Máximo número de bombas activas.
     """
+    bombas_activas = []
+    for obj in objetos:
+        if obj.tipo == "bomba":
+            bombas_activas.append(obj)
+    while len(bombas_activas) < bombas_max:
+        direccion = random.choice(["vertical", "horizontal"])
+        nueva_bomba = Objeto("bomba", direccion=direccion)
+        objetos.append(nueva_bomba)
+        bombas_activas.append(nueva_bomba)
 
-    pygame.init()
 
-def colocar_titulo(titulo):
+def cargar_objetos(nombre_archivo):
+    # Leer los datos del archivo JSON
+    datos = leer_objetos(nombre_archivo)
 
-    pygame.display.set_caption(titulo)
+    # Inicializar las listas
+    objetos = []
+    objetivos = []
 
-def menu(fuente, ejecutar):
+    # Crear los objetos de acuerdo al archivo JSON
+    for entrada in datos["objetos"]:
+        tipo = entrada["tipo"]
+        cantidad = entrada["cantidad"]
+        for _ in range(cantidad):
+            nuevo_objeto = Objeto(tipo)
+            objetos.append(nuevo_objeto)
+            if tipo == "tesoro" or tipo == "vida":
+                # Agregar a la lista de objetivos
+                objetivos.append(nuevo_objeto)
 
-    for evento in pygame.event.get():
+    # Crear bombas con diferentes direcciones
+    for _ in range(cantidad):  # 10 bombas de caída
+        objetos.append(Objeto("bomba", direccion="vertical"))
 
-        if evento.type == pygame.QUIT:
-            ejecutar = False
+    for _ in range(cantidad):  # 5 bombas de movimiento lateral
+        objetos.append(Objeto("bomba", direccion="horizontal"))
 
-        elif evento.type == pygame.MOUSEBUTTONDOWN:
-
-            if evento.button == 1:
-
-                x, y = evento.pos
-
-                for i, opcion in enumerate(OPCIONES):
-
-                    texto = fuente.render(opcion, True, COLOR_TEXTO)
-                    texto_rectangulo = texto.get_rect(center=(400, 300 + i * 100))
-
-                    #rango de cuando el usuario hace click y es en ese rango de unos de los botones hace tal cosa
-                    if texto_rectangulo.collidepoint(x, y):
-
-                        if i == 0:
-                            jugar()
-
-                        elif i == 1:
-                            ejecutar = False
-
-    return ejecutar
-
-def jugar():
-    #logica
-    #personajes, animacion y imagenes de fondo
-
-    x, y = 400, 300
-    velocidad_x = 5
-    velocidad_y = 0
-    gravedad = 1
-    salto = False
-
-    ejecutando = True
-
-    while ejecutando:
-
-        for evento in pygame.event.get():
-            print("as")
-    
-
-def colocar_opciones(fuente, pantalla):
-
-    for i, opcion in enumerate(OPCIONES):
-
-        if i == opcion:
-            texto = fuente.render(opcion, True, COLOR_SELECCIONADO)
-
-        else:
-            texto = fuente.render(opcion, True, COLOR_TEXTO)
-
-        pantalla.blit(texto, (400 - texto.get_width() // 2, 300 + i * 100 - texto.get_height() // 2))
+    # Devolver las listas de objetos y objetivos
+    return objetos, objetivos
