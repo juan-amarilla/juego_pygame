@@ -23,6 +23,7 @@ def leer_archivo(ruta: str, ejecutar: bool, fuente, vertical: int, posicion: int
 
         colocar_fondo()
         colocar_texto(fuente, "Puntuaciones: ", 400, 100)
+        colocar_texto(fuente, "Pulse -> Esc -- para volver al menu", 400, 50)
 
         for evento in pygame.event.get():
 
