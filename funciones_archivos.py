@@ -1,14 +1,13 @@
 from constantes import *
-from funciones_menu import (colocar_fondo, colocar_texto)
+from funciones_menu import *
 
-def leer_archivo(ruta: str, ejecutar: bool, fuente, vertical: int, posicion: int) -> None:
+def leer_archivo(ruta: str, ejecutar: bool, vertical: int, posicion: int) -> None:
     """
     Lee el archivo
 
     Args:
     ruta(str)
     ejecutar(bool)
-    fuente(font)
     vertical(int)
     posicion(int)
 
@@ -16,14 +15,16 @@ def leer_archivo(ruta: str, ejecutar: bool, fuente, vertical: int, posicion: int
     None
     """
 
+    condicion = 1
+
     with open(ruta, "r", encoding="utf-8") as archivo:
         lineas = archivo.readlines()
 
     while ejecutar:
 
-        colocar_fondo()
-        colocar_texto(fuente, "Puntuaciones: ", 400, 100)
-        colocar_texto(fuente, "Pulse -> Esc -- para volver al menu", 400, 50)
+        colocar_fondo(condicion)
+        colocar_texto("Puntuaciones: ", 400, 100)
+        colocar_texto("Pulse -> Esc -- para volver al menu", 400, 50)
 
         for evento in pygame.event.get():
 
@@ -37,7 +38,7 @@ def leer_archivo(ruta: str, ejecutar: bool, fuente, vertical: int, posicion: int
                     ejecutar = False
 
         for indice, linea in enumerate(lineas):
-            texto = fuente.render(linea.strip(), True, COLORES["COLOR_TEXTO"])
+            texto = TIPO_FUENTE.render(linea.strip(), True, COLORES["COLOR_TEXTO"])
             PANTALLA.blit(texto, (400 - texto.get_width() // 2, vertical +  indice * posicion - texto.get_height() // 2))
 
         pygame.display.flip()
