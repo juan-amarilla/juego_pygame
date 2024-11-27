@@ -1,6 +1,7 @@
-from constantes import *
-from funciones_archivos import *
-from funciones_menu import *
+import pygame
+from constantes import SONIDO_TECLADO_MENU
+from funciones_archivos import leer_archivo
+from funciones_pantalla import (colocar_menu, colocar_nombre_pantalla)
 
 def eleccion(opcion: int, ejecutar: bool) -> bool:
     """
@@ -41,7 +42,6 @@ def menu(ejecutar: bool):
     """
    
     pygame.mixer.music.play(-1)
-    condicion = 1
 
     while ejecutar:
 
@@ -61,12 +61,7 @@ def menu(ejecutar: bool):
                         if rectangulo.collidepoint(x, y):
                             ejecutar = eleccion(i, ejecutar)
 
-        colocar_fondo(condicion)
-        colocar_rectangulo(35, 80, 750, 50)
-        colocar_texto(TITULO, 400, 100)
-        rectangulos = colocar_opciones()
-        pygame.display.flip()
-        pygame.time.Clock().tick(5)
+        rectangulos = colocar_menu()
 
     return ejecutar
 
@@ -81,13 +76,10 @@ def ingresar_nombre():
     Returna True si sigue iterando o False si deja de iterar
     """
 
-    condicion = 1
     nombre = ""
     ejecutar = True
 
     while ejecutar:
-
-        colocar_fondo(condicion)
 
         for evento in pygame.event.get():
 
@@ -108,13 +100,6 @@ def ingresar_nombre():
                     SONIDO_TECLADO_MENU.play()
                     nombre += evento.unicode
 
-        colocar_texto("Su nombre buscador: ", 400, 50)
-        rectangulo = pygame.Rect(100, 200, 700, 50)
-        pygame.draw.rect(PANTALLA, COLORES["COLOR_RECTANGULO"], rectangulo, 2)
-
-        nombre_a_colocar = TIPO_FUENTE.render(nombre, True, COLORES["COLOR_TEXTO"])
-        PANTALLA.blit(nombre_a_colocar, (rectangulo.x + 5, rectangulo.y + 5))
-
-        pygame.display.flip()
+        nombre = colocar_nombre_pantalla(nombre)  
 
     return nombre

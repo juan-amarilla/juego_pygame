@@ -1,4 +1,5 @@
-from constantes import *
+import pygame
+from constantes import (TIPO_FUENTE, COLORES, PANTALLA, OPCIONES, VERTICAL, POSICION)
 
 def colocar_texto(texto: str, x: int, y: int) -> None:
     """
@@ -56,25 +57,3 @@ def colocar_opciones():
         rectangulos.append(rectangulo)
 
     return rectangulos
-
-def colocar_fondo(condicion: int) -> None:
-    """
-    Coloca el fondo de imagen dependiendo de la condicion
-
-    Args:
-    condicion(int)
-
-    Returns:
-    None
-    """
-
-    if condicion == 1:
-
-        PANTALLA.blit(IMAGENES['PRIMER'], (0, 0))
-        PANTALLA.blit(IMAGENES['SEGUNDO'], (0, 0))
-        PANTALLA.blit(IMAGENES['TERCER'], (0, 0))
-        PANTALLA.blit(IMAGENES['CUARTO'], (0, -180))
-
-    else:
-
-        pass

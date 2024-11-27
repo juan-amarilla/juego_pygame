@@ -1,5 +1,5 @@
-from funciones_menu import *
-from ciclo_principal import *
+import pygame
+from ciclo_principal import menu
 
 pygame.mixer.music.load("recursos_menu/musica/musica_menu/ambient 9.mp3")
 
