@@ -1,6 +1,14 @@
 # pylint: disable=no-member
+"""
+Este módulo define las constantes utilizadas en el juego.
+
+Incluye configuraciones generales del juego, como el tamaño de la pantalla,
+nombre del juego, límites de objetos en pantalla, así como la carga de
+sonidos e imágenes para los elementos del juego.
+"""
+
 import pygame
-# Inicialización de Pygame
+
 pygame.init()
 
 ANCHO = 800

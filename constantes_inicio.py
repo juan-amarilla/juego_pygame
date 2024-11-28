@@ -28,8 +28,3 @@ IMAGENES_FONDO = {
     "TERCER": pygame.transform.scale(pygame.image.load("recursos_menu/imagenes/imagen_menu/tres.png"), (800, 600)),
     "CUARTO": pygame.transform.scale(pygame.image.load("recursos_menu/imagenes/imagen_menu/cuatro.png"), (800, 600))
 }
-
-# Cargar la imagen y escalarla al tamaño de la pantalla
-FONDO_MENU_ORIGINAL = pygame.image.load(
-    "recursos_menu/imagenes/imagen_menu/fondo.png").convert()
-FONDO_MENU = pygame.transform.scale(FONDO_MENU_ORIGINAL, (ANCHO, ALTO))

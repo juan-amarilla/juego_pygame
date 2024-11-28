@@ -1,4 +1,20 @@
 # pylint: disable=no-member
+
+"""
+Este módulo contiene las funciones que manejan la lógica y el flujo del juego.
+Incluye funciones para la inicialización del juego, manejo de eventos, movimiento
+del jugador, detección de colisiones, actualización del fondo, y mostrar mensajes
+de victoria o derrota, entre otros.
+
+Funciones y tareas:
+    - Manejo de eventos de entrada del usuario.
+    - Actualización y desplazamiento del fondo.
+    - Manejo del movimiento y acciones del jugador.
+    - Carga y gestión de objetos dentro del juego (tesoros, vidas, bombas).
+    - Detección de colisiones y efectos correspondientes.
+    - Actualización y renderizado de los elementos en pantalla.
+    - Mostrar los resultados del juego (ganar/perder) y puntuaciones.
+"""
 import pygame
 import random
 from funciones_lectura_json import leer_objetos, guardar_datos
@@ -9,7 +25,12 @@ import json
 
 
 def iniciar_juego(nombre, FONDO, FONDO_1, FONDO_2):
-    # Inicialización de Pygame
+    """
+    Inicializa el juego, configura la pantalla, carga la música de fondo,
+    y establece el bucle principal del juego donde se gestionan eventos,
+    movimientos, colisiones, y renderizado.
+    """
+
     pygame.init()
 
     # Configuración de la pantalla
@@ -79,7 +100,11 @@ def iniciar_juego(nombre, FONDO, FONDO_1, FONDO_2):
 
 
 def manejar_eventos():
-    """Maneja eventos de entrada del usuario."""
+    """
+    Maneja los eventos de entrada del usuario, como el cierre de la ventana.
+
+    return: True si el juego debe continuar, False si debe terminar.
+    """
 
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -118,6 +143,10 @@ def manejar_movimiento(jugador, teclas, objetos):
 
 
 def cargar_objetos(nombre_archivo):
+    """
+    Carga los objetos del juego desde un archivo JSON y crea instancias de los objetos.
+
+    """
     # Leer los datos del archivo JSON
     datos = leer_objetos(nombre_archivo)
 
@@ -198,7 +227,7 @@ def dibujar_elementos(pantalla, jugador, objetos, puntos, vidas, fuente):
 
 def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO, nombre):
     """
-    Muestra el mensaje de "Game Over" en la pantalla junto con los puntos y vidas restantes.
+    Muestra el mensaje de "Perder" en la pantalla junto con los puntos y vidas restantes.
     También guarda los datos en un archivo JSON.
     """
     # Fuente y texto principal
@@ -244,6 +273,11 @@ def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO, 
 
 
 def mostrar_mensaje_victoria(pantalla, texto, color, puntos, vidas, estado, nombre):
+    """
+    Muestra el mensaje de victoria junto con los puntos y las vidas restantes,
+    y guarda los datos del jugador en un archivo JSON.
+
+    """
     # Validar el color
     if not (isinstance(color, tuple) and len(color) == 3 and all(0 <= c <= 255 for c in color)):
         raise ValueError(
@@ -289,8 +323,6 @@ def generar_bombas(objetos, bombas_max):
     """
     Genera nuevas bombas si el número de bombas activas es menor al máximo permitido.
 
-    :param objetos: Lista de objetos en el juego.
-    :param max_bombas: Máximo número de bombas activas.
     """
     bombas_activas = []
     for obj in objetos:
@@ -304,7 +336,10 @@ def generar_bombas(objetos, bombas_max):
 
 
 def mostrar_puntuaciones(pantalla, archivo_json, ANCHO, ALTO, COLOR_TEXTO, IMAGENES_FONDO):
+    """
+    Muestra la lista de puntuaciones guardadas en un archivo JSON.
 
+    """
     # Cargar las puntuaciones desde el archivo JSON
     try:
         with open(archivo_json, "r") as file:
