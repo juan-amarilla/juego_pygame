@@ -3,9 +3,8 @@ import pygame
 import random
 from funciones_lectura_json import leer_objetos, guardar_datos
 from clases_juego import Jugador, Objeto
-from constantes_juego import SONIDO_BOMBA, SONIDO_TESORO, SONIDO_VIDA, BOMBAS_MAX, ALTO, ANCHO, NOMBRE_JUEGO
+from constantes_juego import SONIDO_BOMBA, SONIDO_TESORO, SONIDO_VIDA, BOMBAS_MAX, ALTO, ANCHO, NOMBRE_JUEGO, FONDO_ANCHO, VELOCIDAD_FONDO
 from colores_juego import BLANCO, VERDE, ROJO
-from constantes_juego import ANCHO, ALTO, NOMBRE_JUEGO, FONDO, FONDO_1, FONDO_2, FONDO_ANCHO, VELOCIDAD_FONDO
 import json
 
 
@@ -304,20 +303,7 @@ def generar_bombas(objetos, bombas_max):
         bombas_activas.append(nueva_bomba)
 
 
-def mostrar_puntuaciones(pantalla, archivo_json, ANCHO, ALTO, COLOR_TEXTO, COLOR_FONDO):
-    """
-    Muestra las puntuaciones almacenadas en un archivo JSON.
-
-    Args:
-        pantalla (pygame.Surface): Superficie de la pantalla.
-        archivo_json (str): Nombre del archivo JSON.
-        ANCHO (int): Ancho de la pantalla.
-        ALTO (int): Alto de la pantalla.
-        COLOR_TEXTO (tuple): Color del texto (RGB).
-        COLOR_FONDO (tuple): Color del fondo (RGB).
-    """
-    import json
-    import pygame
+def mostrar_puntuaciones(pantalla, archivo_json, ANCHO, ALTO, COLOR_TEXTO, IMAGENES_FONDO):
 
     # Cargar las puntuaciones desde el archivo JSON
     try:
@@ -335,7 +321,7 @@ def mostrar_puntuaciones(pantalla, archivo_json, ANCHO, ALTO, COLOR_TEXTO, COLOR
     fuente_texto = pygame.font.Font(None, 36)
 
     # Dibujar el fondo
-    pantalla.fill(COLOR_FONDO)
+    pantalla.blit(IMAGENES_FONDO, (0, 0))
 
     # Mostrar título
     texto_titulo = fuente_titulo.render("Puntuaciones", True, COLOR_TEXTO)

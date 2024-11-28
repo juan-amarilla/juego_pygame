@@ -1,7 +1,7 @@
 # pylint: disable=no-member
 import pygame
-from constantes_inicio import *
-from funciones_menu import *
+from constantes_inicio import SONIDO_TECLADO_MENU
+from funciones_pantalla import colocar_puntuaciones
 
 
 def leer_archivo(ruta: str, ejecutar: bool, vertical: int, posicion: int) -> None:
@@ -18,16 +18,10 @@ def leer_archivo(ruta: str, ejecutar: bool, vertical: int, posicion: int) -> Non
     None
     """
 
-    # condicion = 1
-
     with open(ruta, "r", encoding="utf-8") as archivo:
         lineas = archivo.readlines()
 
     while ejecutar:
-
-        # colocar_fondo(condicion)
-        colocar_texto("Puntuaciones: ", 400, 100)
-        colocar_texto("Pulse -> Esc -- para volver al menu", 400, 50)
 
         for evento in pygame.event.get():
 
@@ -40,14 +34,7 @@ def leer_archivo(ruta: str, ejecutar: bool, vertical: int, posicion: int) -> Non
                     SONIDO_TECLADO_MENU.play()
                     ejecutar = False
 
-        for indice, linea in enumerate(lineas):
-            texto = TIPO_FUENTE.render(
-                linea.strip(), True, COLORES["COLOR_TEXTO"])
-            PANTALLA.blit(texto, (400 - texto.get_width() // 2,
-                          vertical + indice * posicion - texto.get_height() // 2))
-
-        pygame.display.flip()
-        pygame.time.Clock().tick(60)
+        colocar_puntuaciones(lineas, vertical, posicion)
 
     return ejecutar
 

@@ -22,7 +22,7 @@ COLORES = {
     "COLOR_FONDO": (0, 0, 0)
 }
 
-IMAGENES = {
+IMAGENES_FONDO = {
     "PRIMER": pygame.transform.scale(pygame.image.load("recursos_menu/imagenes/imagen_menu/uno.png"), (800, 600)),
     "SEGUNDO": pygame.transform.scale(pygame.image.load("recursos_menu/imagenes/imagen_menu/dos.png"), (800, 600)),
     "TERCER": pygame.transform.scale(pygame.image.load("recursos_menu/imagenes/imagen_menu/tres.png"), (800, 600)),

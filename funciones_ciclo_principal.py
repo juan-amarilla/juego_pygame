@@ -1,10 +1,10 @@
 # pylint: disable=no-member
 import pygame
-from constantes_inicio import *
-from funciones_archivos import leer_archivo
-from funciones_menu import *
+from constantes_inicio import SONIDO_TECLADO_MENU, IMAGENES_FONDO
+from funciones_menu import PANTALLA, COLORES
 from funciones_juego import iniciar_juego, mostrar_puntuaciones
 from constantes_juego import FONDO, FONDO_1, FONDO_2, ALTO, ANCHO
+from funciones_pantalla import colocar_menu, colocar_nombre_pantalla
 
 
 def eleccion(opcion: int, ejecutar: bool) -> bool:
@@ -33,7 +33,7 @@ def eleccion(opcion: int, ejecutar: bool) -> bool:
     elif opcion == 1:
         SONIDO_TECLADO_MENU.play()
         mostrar_puntuaciones(PANTALLA, "puntuaciones.json", ANCHO,
-                             ALTO, COLORES["COLOR_TEXTO"], COLORES["COLOR_FONDO"])
+                             ALTO, COLORES["COLOR_TEXTO"], IMAGENES_FONDO["PRIMER"])
 
     elif opcion == 2:
         SONIDO_TECLADO_MENU.play()
@@ -55,12 +55,12 @@ def menu(ejecutar: bool):
     pygame.mixer.music.stop()  # Detiene cualquier música que estuviera sonando
     pygame.mixer.music.load("recursos_menu/musica/musica_menu/ambient 9.mp3")
     pygame.mixer.music.play(-1)  # Reproduce la música del menú en bucle
-    condicion = 1
 
     while ejecutar:
 
-        # Redibuja el fondo para limpiar la pantalla
-        PANTALLA.blit(FONDO_MENU, (0, 0))
+        # # Redibuja el fondo para limpiar la pantalla
+        # PANTALLA.blit(FONDO_MENU, (0, 0))
+
         for evento in pygame.event.get():
 
             if evento.type == pygame.QUIT:
@@ -75,13 +75,7 @@ def menu(ejecutar: bool):
 
                         if rectangulo.collidepoint(x, y):
                             ejecutar = eleccion(i, ejecutar)
-
-        # colocar_fondo(condicion)
-        colocar_rectangulo(35, 80, 750, 50)
-        colocar_texto(TITULO, 400, 100)
-        rectangulos = colocar_opciones()
-        pygame.display.flip()
-        pygame.time.Clock().tick(5)
+        rectangulos = colocar_menu()
 
     return ejecutar
 
@@ -97,13 +91,10 @@ def ingresar_nombre():
     Returna True si sigue iterando o False si deja de iterar
     """
 
-    condicion = 1
     nombre = ""
     ejecutar = True
 
     while ejecutar:
-
-        # colocar_fondo(condicion)
 
         for evento in pygame.event.get():
 
@@ -124,14 +115,6 @@ def ingresar_nombre():
                     SONIDO_TECLADO_MENU.play()
                     nombre += evento.unicode
 
-        colocar_texto("Su nombre buscador: ", 400, 50)
-        rectangulo = pygame.Rect(100, 200, 700, 50)
-        pygame.draw.rect(PANTALLA, COLORES["COLOR_RECTANGULO"], rectangulo, 2)
-
-        nombre_a_colocar = TIPO_FUENTE.render(
-            nombre, True, COLORES["COLOR_TEXTO"])
-        PANTALLA.blit(nombre_a_colocar, (rectangulo.x + 5, rectangulo.y + 5))
-
-        pygame.display.flip()
+        nombre = colocar_nombre_pantalla(nombre)
 
     return nombre
