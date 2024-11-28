@@ -1,7 +1,6 @@
 import pygame
 
 pygame.init()
-pygame.mixer.init()
 ANCHO, ALTURA = 800, 600
 PANTALLA = pygame.display.set_mode((ANCHO, ALTURA))
 TITULO = "Aventura en el Lugar de Escape"

@@ -19,10 +19,6 @@ def colocar_fondo(condicion: int) -> None:
         PANTALLA.blit(IMAGENES_FONDO['SEGUNDO'], (0, 0))
         PANTALLA.blit(IMAGENES_FONDO['TERCER'], (0, 0))
         PANTALLA.blit(IMAGENES_FONDO['CUARTO'], (0, -180))
-
-    else:
-
-        pass
         
 
 def colocar_menu() -> list:

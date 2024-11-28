@@ -1,8 +1,9 @@
 import pygame
-import random
-from constantes import (SONIDO_TECLADO_MENU, PANTALLA, COLORES, IMAGENES_OBJETOS, IMAGEN_PERSONAJE)
-from funciones_archivos import (leer_archivo, agregar_jugador)
-from funciones_pantalla import (colocar_menu, colocar_nombre_pantalla, colocar_fondo)
+from constantes import SONIDO_TECLADO_MENU
+from constantes_juego import (FONDO, FONDO_1, FONDO_2)
+from funciones_archivos import leer_archivo
+from funciones_pantalla import (colocar_menu, colocar_nombre_pantalla)
+from funciones_juego import iniciar_juego
 
 def eleccion(opcion: int, ejecutar: bool) -> bool:
     """
@@ -19,6 +20,14 @@ def eleccion(opcion: int, ejecutar: bool) -> bool:
     if opcion == 0:
         SONIDO_TECLADO_MENU.play()
         nombre = ingresar_nombre()
+
+        resultado = iniciar_juego(nombre, FONDO, FONDO_1, FONDO_2)
+        if resultado in ["gano", "perdio"]:
+            print(f"El jugador {nombre} terminó el juego con el resultado: {resultado}")
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load("recursos_menu/musica/musica_menu/Ambient 9.mp3")
+            pygame.mixer.music.play(-1)
+            ejecutar = True  # Volver al menú principal
 
     elif opcion == 1:
         SONIDO_TECLADO_MENU.play()
