@@ -1,6 +1,6 @@
 import pygame
 from funciones_menu import (colocar_rectangulo, colocar_texto, colocar_opciones)
-from constantes import (TITULO, TIPO_FUENTE, COLORES, PANTALLA, IMAGENES)
+from constantes import (TITULO, TIPO_FUENTE, COLORES, PANTALLA, IMAGENES_FONDO)
 
 def colocar_fondo(condicion: int) -> None:
     """
@@ -15,14 +15,15 @@ def colocar_fondo(condicion: int) -> None:
 
     if condicion == 1:
 
-        PANTALLA.blit(IMAGENES['PRIMER'], (0, 0))
-        PANTALLA.blit(IMAGENES['SEGUNDO'], (0, 0))
-        PANTALLA.blit(IMAGENES['TERCER'], (0, 0))
-        PANTALLA.blit(IMAGENES['CUARTO'], (0, -180))
+        PANTALLA.blit(IMAGENES_FONDO['PRIMER'], (0, 0))
+        PANTALLA.blit(IMAGENES_FONDO['SEGUNDO'], (0, 0))
+        PANTALLA.blit(IMAGENES_FONDO['TERCER'], (0, 0))
+        PANTALLA.blit(IMAGENES_FONDO['CUARTO'], (0, -180))
 
     else:
 
         pass
+        
 
 def colocar_menu() -> list:
     """
