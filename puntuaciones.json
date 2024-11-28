@@ -10,5 +10,23 @@
         "estado": "perdiste",
         "puntos": 20,
         "vidas": 0
+    },
+    {
+        "nombre": "valery",
+        "estado": "ganaste",
+        "puntos": 50,
+        "vidas": 5
+    },
+    {
+        "nombre": "ori",
+        "estado": "perdiste",
+        "puntos": 20,
+        "vidas": 0
+    },
+    {
+        "nombre": "yo",
+        "estado": "ganaste",
+        "puntos": 50,
+        "vidas": 4
     }
 ]

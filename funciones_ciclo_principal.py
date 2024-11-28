@@ -28,6 +28,10 @@ def eleccion(opcion: int, ejecutar: bool) -> bool:
         if resultado in ["gano", "perdio"]:
             print(f"El jugador {
                   nombre} terminó el juego con el resultado: {resultado}")
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load(
+                "recursos_menu/musica/musica_menu/Ambient 9.mp3")
+            pygame.mixer.music.play(-1)
             ejecutar = True  # Volver al menú principal
 
     elif opcion == 1:
