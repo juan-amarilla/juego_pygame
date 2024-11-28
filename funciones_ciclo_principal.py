@@ -3,8 +3,8 @@ import pygame
 from constantes_inicio import *
 from funciones_archivos import leer_archivo
 from funciones_menu import *
-from funciones_juego import iniciar_juego
-from constantes_juego import FONDO, FONDO_1, FONDO_2
+from funciones_juego import iniciar_juego, mostrar_puntuaciones
+from constantes_juego import FONDO, FONDO_1, FONDO_2, ALTO, ANCHO
 
 
 def eleccion(opcion: int, ejecutar: bool) -> bool:
@@ -32,7 +32,8 @@ def eleccion(opcion: int, ejecutar: bool) -> bool:
 
     elif opcion == 1:
         SONIDO_TECLADO_MENU.play()
-        leer_archivo("puntuaciones.txt", ejecutar, 200, 50)
+        mostrar_puntuaciones(PANTALLA, "puntuaciones.json", ANCHO,
+                             ALTO, COLORES["COLOR_TEXTO"], COLORES["COLOR_FONDO"])
 
     elif opcion == 2:
         SONIDO_TECLADO_MENU.play()
@@ -58,6 +59,8 @@ def menu(ejecutar: bool):
 
     while ejecutar:
 
+        # Redibuja el fondo para limpiar la pantalla
+        PANTALLA.blit(FONDO_MENU, (0, 0))
         for evento in pygame.event.get():
 
             if evento.type == pygame.QUIT:

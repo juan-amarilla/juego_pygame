@@ -1,0 +1,44 @@
+[
+    {
+        "nombre": "orisns",
+        "estado": "perdiste",
+        "puntos": 0,
+        "vidas": 0
+    },
+    {
+        "nombre": "danellys",
+        "estado": "ganaste",
+        "puntos": 50,
+        "vidas": 5
+    },
+    {
+        "nombre": "orina\u001b\u001b\u001b\u001b\u001b\u001b\u001b\u001b",
+        "estado": "perdiste",
+        "puntos": 10,
+        "vidas": 0
+    },
+    {
+        "nombre": "danellys",
+        "estado": "ganaste",
+        "puntos": 50,
+        "vidas": 5
+    },
+    {
+        "nombre": "oriana",
+        "estado": "ganaste",
+        "puntos": 50,
+        "vidas": 2
+    },
+    {
+        "nombre": "oriana",
+        "estado": "ganaste",
+        "puntos": 50,
+        "vidas": 1
+    },
+    {
+        "nombre": "oriana",
+        "estado": "ganaste",
+        "puntos": 50,
+        "vidas": 4
+    }
+]

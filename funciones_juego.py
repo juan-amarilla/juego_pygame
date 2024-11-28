@@ -6,6 +6,7 @@ from clases_juego import Jugador, Objeto
 from constantes_juego import SONIDO_BOMBA, SONIDO_TESORO, SONIDO_VIDA, BOMBAS_MAX, ALTO, ANCHO, NOMBRE_JUEGO
 from colores_juego import BLANCO, VERDE, ROJO
 from constantes_juego import ANCHO, ALTO, NOMBRE_JUEGO, FONDO, FONDO_1, FONDO_2, FONDO_ANCHO, VELOCIDAD_FONDO
+import json
 
 
 def iniciar_juego(nombre, FONDO, FONDO_1, FONDO_2):
@@ -55,13 +56,13 @@ def iniciar_juego(nombre, FONDO, FONDO_1, FONDO_2):
             # Verificar si perdió
             if jugador.vidas <= 0:
                 mostrar_mensaje_perder(
-                    pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO)
+                    pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO, nombre)
                 return "perdio"
 
             # Verificar si ganó
             if len(objetivos) == 0:
                 mostrar_mensaje_victoria(pantalla, "¡Ganaste!", VERDE,
-                                         jugador.puntos, jugador.vidas, "ganaste")
+                                         jugador.puntos, jugador.vidas, "ganaste", nombre)
                 return "gano"
 
             # Actualizar pantalla
@@ -196,7 +197,7 @@ def dibujar_elementos(pantalla, jugador, objetos, puntos, vidas, fuente):
     pantalla.blit(texto_vidas, (10, 50))
 
 
-def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO):
+def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO, nombre):
     """
     Muestra el mensaje de "Game Over" en la pantalla junto con los puntos y vidas restantes.
     También guarda los datos en un archivo JSON.
@@ -235,14 +236,15 @@ def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO):
     pygame.time.wait(3000)
 
     # Guardar datos en JSON
-    guardar_datos("resultado.json", {
+    guardar_datos("puntuaciones.json", {
+        "nombre": nombre,
         "estado": "perdiste",
         "puntos": jugador.puntos,
         "vidas": jugador.vidas
     })
 
 
-def mostrar_mensaje_victoria(pantalla, texto, color, puntos, vidas, estado):
+def mostrar_mensaje_victoria(pantalla, texto, color, puntos, vidas, estado, nombre):
     # Validar el color
     if not (isinstance(color, tuple) and len(color) == 3 and all(0 <= c <= 255 for c in color)):
         raise ValueError(
@@ -276,7 +278,8 @@ def mostrar_mensaje_victoria(pantalla, texto, color, puntos, vidas, estado):
     pygame.time.wait(3000)
 
     # Guardar datos en JSON
-    guardar_datos("resultado.json", {
+    guardar_datos("puntuaciones.json", {
+        "nombre": nombre,
         "estado": estado,
         "puntos": puntos,
         "vidas": vidas
@@ -299,3 +302,71 @@ def generar_bombas(objetos, bombas_max):
         nueva_bomba = Objeto("bomba", direccion=direccion)
         objetos.append(nueva_bomba)
         bombas_activas.append(nueva_bomba)
+
+
+def mostrar_puntuaciones(pantalla, archivo_json, ANCHO, ALTO, COLOR_TEXTO, COLOR_FONDO):
+    """
+    Muestra las puntuaciones almacenadas en un archivo JSON.
+
+    Args:
+        pantalla (pygame.Surface): Superficie de la pantalla.
+        archivo_json (str): Nombre del archivo JSON.
+        ANCHO (int): Ancho de la pantalla.
+        ALTO (int): Alto de la pantalla.
+        COLOR_TEXTO (tuple): Color del texto (RGB).
+        COLOR_FONDO (tuple): Color del fondo (RGB).
+    """
+    import json
+    import pygame
+
+    # Cargar las puntuaciones desde el archivo JSON
+    try:
+        with open(archivo_json, "r") as file:
+            datos = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        datos = []  # Si no hay datos, inicializamos con una lista vacía
+
+    # Ordenar por puntos de mayor a menor
+    datos_ordenados = sorted(datos, key=lambda x: x["puntos"], reverse=True)
+
+    # Configurar fuente
+    fuente_titulo = pygame.font.Font(None, 72)  # Fuente grande para el título
+    # Fuente más pequeña para los datos
+    fuente_texto = pygame.font.Font(None, 36)
+
+    # Dibujar el fondo
+    pantalla.fill(COLOR_FONDO)
+
+    # Mostrar título
+    texto_titulo = fuente_titulo.render("Puntuaciones", True, COLOR_TEXTO)
+    pantalla.blit(texto_titulo, (ANCHO // 2 -
+                  texto_titulo.get_width() // 2, 50))
+
+    # Mostrar las puntuaciones
+    y_offset = 150  # Espacio inicial desde la parte superior
+    espacio_entre_lineas = 40  # Espacio entre líneas
+
+    for jugador in datos_ordenados:
+        texto = f"{jugador['nombre']}: {
+            jugador['puntos']} puntos, {jugador['vidas']} vidas"
+        texto_render = fuente_texto.render(texto, True, COLOR_TEXTO)
+
+        if y_offset + texto_render.get_height() > ALTO - 50:  # Verificar si hay espacio en la pantalla
+            break  # No dibujar más si se sale de la pantalla
+
+        pantalla.blit(texto_render, (ANCHO // 2 -
+                      texto_render.get_width() // 2, y_offset))
+        y_offset += espacio_entre_lineas
+
+    # Actualizar la pantalla
+    pygame.display.flip()
+
+    # Esperar hasta que el jugador presione Escape
+    esperando = True
+    while esperando:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
+                esperando = False  # Salir del bucle para volver al menú principal
