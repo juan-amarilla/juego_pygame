@@ -9,7 +9,19 @@ from colores_juego import (BLANCO, VERDE, ROJO)
 from constantes_juego import (ANCHO, ALTO, FONDO_ANCHO, VELOCIDAD_FONDO)
 
 
-def iniciar_juego(nombre, FONDO, FONDO_1, FONDO_2):
+def iniciar_juego(nombre: str, FONDO, FONDO_1: int, FONDO_2: int) -> str:
+    """
+    Inicia el juego
+
+    Args:
+    nombre(str)
+    FONDO(surface)
+    FONDO_1(int)
+    FONDO_2(int)
+
+    Return:
+    retornara gano o perdio
+    """
 
     pygame.mixer.music.load("recursos_juego/musica/musica_fondo.ogg")
     pygame.mixer.music.play(-1)  # -1 para reproducir en bucle
@@ -60,7 +72,16 @@ def iniciar_juego(nombre, FONDO, FONDO_1, FONDO_2):
         print(f"Error de valor: {e}")
 
 
-def manejar_eventos():
+def manejar_eventos() -> bool:
+    """
+    Manejara un evento
+
+    Args:
+    None
+
+    Return:
+    False si sale o True que no saldra
+    """
 
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -68,7 +89,21 @@ def manejar_eventos():
     return True
 
 
-def actualizar_fondo(pantalla, fondo, fondo_1, fondo_2, velocidad, ancho):
+def actualizar_fondo(pantalla, fondo, fondo_1: int, fondo_2: int, velocidad: int, ancho: int):
+    """
+    Actualizara el fondo de manera dinamica
+
+    Args:
+    pantalla(surface)
+    fondo(surface)
+    fondo_1(int)
+    fondo_2(int)
+    velocidad(int)
+    ancho(int)
+
+    Return:
+    Retorna un doble entero
+    """
 
     fondo_1 -= velocidad
     fondo_2 -= velocidad
@@ -84,7 +119,18 @@ def actualizar_fondo(pantalla, fondo, fondo_1, fondo_2, velocidad, ancho):
     return fondo_1, fondo_2
 
 
-def manejar_movimiento(jugador, teclas, objetos):
+def manejar_movimiento(jugador, teclas: list, objetos: list) -> None:
+    """
+    Podras manejar el personaje con las flechas
+
+    Args:
+    jugador(class)
+    teclas(list)
+    objetos(list)
+
+    Return:
+    None
+    """
     
     if teclas[pygame.K_LEFT]:
         jugador.mover(-5, 0, objetos)
@@ -98,7 +144,16 @@ def manejar_movimiento(jugador, teclas, objetos):
         jugador.saltar()
 
 
-def cargar_objetos(nombre_archivo):
+def cargar_objetos(nombre_archivo: str):
+    """
+    Cargaras todos los objetos
+
+    Args:
+    nombre_archivo(str)
+
+    Return:
+    Retorna dos listas
+    """
     
     datos = leer_objetos(nombre_archivo)
 
@@ -124,7 +179,18 @@ def cargar_objetos(nombre_archivo):
     return objetos, objetivos
 
 
-def manejar_colisiones(jugador, objetos, objetivos):
+def manejar_colisiones(jugador, objetos: list, objetivos: list) -> None:
+    """
+    Verificaras el tema de colisiones
+
+    Args:
+    jugador(class)
+    objetos(list)
+    objetivos(list)
+
+    Return:
+    None
+    """
     
     for obj in objetos[:]: 
 
@@ -158,7 +224,21 @@ def manejar_colisiones(jugador, objetos, objetivos):
     generar_bombas(objetos, BOMBAS_MAX)
 
 
-def dibujar_elementos(pantalla, jugador, objetos, puntos, vidas, fuente):
+def dibujar_elementos(pantalla, jugador, objetos: list, puntos: int, vidas: int, fuente) -> None:
+    """
+    Dibujas los elementos necesarios
+
+    Args:
+    pantalla(surface)
+    jugador(class)
+    objetos(list)
+    puntos(int)
+    vidas(int)
+    fuente(font)
+
+    Return:
+    None
+    """
 
     jugador.dibujar(pantalla)
 
@@ -172,7 +252,21 @@ def dibujar_elementos(pantalla, jugador, objetos, puntos, vidas, fuente):
     pantalla.blit(texto_vidas, (10, 50))
 
 
-def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO):
+def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO: int, ALTO: int, ROJO: tuple) -> None:
+    """
+    Mostras el mensaje cuando perdiste
+
+    Args:
+    pantalla(surface)
+    jugador(class)
+    guardar_datos(function)
+    ANCHO(int)
+    ALTO(int)
+    ROJO(tuple)
+
+    Return:
+    None
+    """
     
     fuente = pygame.font.Font(None, 72)
     texto_perder = fuente.render("¡Perdiste!", True, ROJO)
@@ -207,7 +301,21 @@ def mostrar_mensaje_perder(pantalla, jugador, guardar_datos, ANCHO, ALTO, ROJO):
     })
 
 
-def mostrar_mensaje_victoria(pantalla, texto, color, puntos, vidas, estado):
+def mostrar_mensaje_victoria(pantalla, texto: str, color: tuple, puntos: int, vidas: int, estado: str) -> None:
+    """
+    Mostras el mensaje cuando ganaste
+
+    Args:
+    pantalla(surface)
+    texto(str)
+    color(tuple)
+    puntos(int)
+    vidas(int)
+    estado(str)
+
+    Return:
+    None
+    """
 
     if not (isinstance(color, tuple) and len(color) == 3 and all(0 <= c <= 255 for c in color)):
         raise ValueError(
@@ -242,7 +350,17 @@ def mostrar_mensaje_victoria(pantalla, texto, color, puntos, vidas, estado):
     })
 
 
-def generar_bombas(objetos, bombas_max):
+def generar_bombas(objetos: list, bombas_max: int) -> None:
+    """
+    Generas bombas al azar en cualquier coordenadas
+
+    Args:
+    objetos(list)
+    bombas_max(int)
+
+    Return:
+    None
+    """
     
     bombas_activas = []
     for obj in objetos:

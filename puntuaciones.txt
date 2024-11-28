@@ -1,3 +1,3 @@
-kilo -- 0
-jugador kilo -- 200
-jugador uno -- 200
+jugador -- 0
+jugador 2 -- 250
+jugador tres -- 150
