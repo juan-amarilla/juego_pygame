@@ -1,2 +1,4 @@
 jugador -- 250
 juga -- 200
+jugador 90 -- 50
+jugador diez -- 250
