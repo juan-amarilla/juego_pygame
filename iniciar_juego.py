@@ -1,24 +1,11 @@
 import pygame
-from funciones import *
-from constantes import *
+from ciclo_principal import menu
 
-iniciar()
-
-pantalla = pygame.display.set_mode((800, 600))
-colocar_titulo("el juego")
-
-fuente = pygame.font.Font(None, 50)
-
-opcion = 0
+pygame.mixer.init()
+pygame.mixer.music.load("recursos_menu/musica/musica_menu/ambient 9.mp3")
 
 ejecutar = True
 
 while ejecutar:
 
-    ejecutar = menu(fuente, ejecutar)
-                    
-    pantalla.fill(COLOR_FONDO)
-
-    colocar_opciones(fuente, pantalla)
-
-    pygame.display.flip()
+    ejecutar = menu(ejecutar)
